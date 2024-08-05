@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                   
+    "module": "ESNext",               
+    "lib": ["ES6"],               
+    "strict": true,                       
+    "esModuleInterop": true,               
+    "skipLibCheck": true,                   
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./server/build",                       
+  },
+  "include": ["server"]
+}
+
