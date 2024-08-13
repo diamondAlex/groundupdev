@@ -1,7 +1,10 @@
+//TODO
+//set up the textareas to ignore 'enter'
+//make event to submit on enter click
 import { useState } from 'react'
 
-let submit = async (username: string,password: string,next : () => void) => {
-    fetch("http://localhost:5173/api/login",{
+let submit = async (api:string, username: string,password: string,next : (status: boolean) => void) => {
+    fetch(`http://localhost:5173/api/${api}`,{
         method:"POST",
         body:JSON.stringify({
             username:username,
@@ -9,41 +12,49 @@ let submit = async (username: string,password: string,next : () => void) => {
         })
     })
     .then(async (res)=>{
-        let j = await res.text()
-        console.log(j)
+        let text = await res.text()
+        if(text === "true"){
+            next(true)
+        }else{
+            alert("SOMETHING WENT WRONG (lol)")
+            next(false)
+        }
     })
-    next()
 }
 
-function Signup({ link } : {link: () => void}){
+function Signup({ link } : {link: (status:boolean) => void}){
     const [ username, setUsername ] = useState("")
     const [ password, setPassword ] = useState("")
 
     return (
         <>
-            Sign up page<br/>
-            Username:<textarea value={username} onChange={(e)=> setUsername(e.target.value)} />
-            Password<textarea value={password} onChange={(e)=> setPassword(e.target.value)} />
-            <button onClick={() => submit(username,password,link)}> submit </button>
+            <div style={{flex:1, border:"solid",borderColor:"white"}}>
+                Sign up<br/>
+                Username:<textarea value={username} onChange={(e)=> setUsername(e.target.value)} /><br/>
+                Password<textarea value={password} onChange={(e)=> setPassword(e.target.value)} /><br/>
+                <button onClick={() => submit("signup",username,password,link)}> submit </button>
+            </div>
         </>
     )
 }
 
-function Log({ link } : {link: () => void}){
+function Log({ link } : {link: (status: boolean) => void}){
     const [ username, setUsername ] = useState("")
     const [ password, setPassword ] = useState("")
 
     return (
         <>
-            Log in page<br/>
-            Username:<textarea value={username} onChange={(e)=> setUsername(e.target.value)} />
-            Password<textarea value={password} onChange={(e)=> setPassword(e.target.value)} />
-            <button onClick={() => submit(username, password, link)}> submit </button>
+            <div style={{flex:1, border:"solid",borderColor:"white",padding:"5%"}}>
+                Log in<br/>
+                Username:<textarea value={username} onChange={(e)=> setUsername(e.target.value)} /><br/>
+                Password<textarea value={password} onChange={(e)=> setPassword(e.target.value)} /><br/>
+                <button onClick={() => submit("login",username, password, link)}> submit </button>
+            </div>
         </>
     )
 }
 
-function Login({ link } : {link : () => void} ) {
+function Login({ link } : {link : (status:boolean) => void} ) {
     const [ display, setDisplay ] = useState(0)
 
     let swaplog = () =>{
@@ -56,9 +67,11 @@ function Login({ link } : {link : () => void} ) {
 
     return (
         <>
-            <div>
+            <div style={{display:"flex",flex:1, padding:"15%"}}>
                 {display? <Signup link={ link } />: <Log link={ link } />}
-                <button onClick={swaplog} > {display? "log in":"sign up"} </button>
+                <div>
+                    <button onClick={swaplog} > {display? "log in":"sign up"} </button>
+                </div>
             </div>
         </>
     )

@@ -4,7 +4,7 @@ import Profile from './Profile/Profile'
 import { useState, useEffect } from 'react'
 
 function App() {
-    const [ logged, setLogged ] = useState(0)
+    const [ logged, setLogged ] = useState(false)
     
     useEffect(() =>{
         fetch("http://localhost:5173/api/session",{
@@ -12,23 +12,32 @@ function App() {
         }) 
         .then((res) => {
             res.text().then((text) =>{
-                console.log("RES")
                 if(text == "logged"){
-                    setLogged(1)
+                    setLogged(true)
+                }else{
+                    setLogged(false)
                 }
             })
         })
     },[])
 
-    let handleClick = () =>{
-        setLogged(1) 
+    let handleClick = (status: boolean) =>{
+        setLogged(status) 
     }    
+
+    console.log(logged)
 
     return (
         <>
-            {
-                logged?<Profile />:<Login link={handleClick} />
-            }
+            <div style={{display:'flex',flex:1,color:"white"}}>
+                {
+                    logged?
+                        <Profile />:
+                        logged?
+                            <div>hi</div>:
+                            <Login link={(status: boolean) => handleClick(status)} />
+                }
+            </div>
         </>
     )
 }
