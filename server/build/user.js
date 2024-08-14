@@ -84,6 +84,44 @@ export function register(username, password) {
         });
     });
 }
+export function setProfile(profile) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => {
+            let qry = `insert into profile
+        (username,name,lastname,description,education)
+        values(
+            '${profile.username}',
+            '${profile.name}',
+            '${profile.lastname}',
+            '${profile.description}',
+            '${profile.education}'
+        )`;
+            connection.query(qry, (err, values) => {
+                if (err) {
+                    resolve(null);
+                }
+                else {
+                    resolve(values);
+                }
+            });
+        });
+    });
+}
+export function getProfile(username) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => {
+            let qry = `select * from profile where username='${username}';`;
+            connection.query(qry, (err, values) => {
+                if (err) {
+                    resolve(null);
+                }
+                else {
+                    resolve(values);
+                }
+            });
+        });
+    });
+}
 export function getSession() {
     return __awaiter(this, void 0, void 0, function* () {
     });

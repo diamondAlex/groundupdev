@@ -1,6 +1,7 @@
 //TODO
 //set up the textareas to ignore 'enter'
 //make event to submit on enter click
+//change the password for *
 import { useState } from 'react'
 
 let submit = async (api:string, username: string,password: string,next : (status: boolean) => void) => {

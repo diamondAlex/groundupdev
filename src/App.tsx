@@ -1,4 +1,5 @@
-//import { useState } from 'react'
+//TODO
+//useeffect is too slow loading data, we need placeholders divs while the data is loading
 import Login from './Login/Login'
 import Profile from './Profile/Profile'
 import { useState, useEffect } from 'react'

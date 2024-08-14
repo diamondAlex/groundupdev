@@ -80,7 +80,51 @@ export async function register(username: string, password: string){
                  }
              })
     })
+}
 
+export interface Profile{
+    username: string,
+    name:string,
+    lastname: string,
+    description: string,
+    education: string
+}
+
+export async function setProfile(profile: Profile){
+    return new Promise((resolve,reject) => {
+        let qry = `insert into profile
+        (username,name,lastname,description,education)
+        values(
+            '${profile.username}',
+            '${profile. name}',
+            '${profile. lastname}',
+            '${profile. description}',
+            '${profile. education}'
+        )`
+        connection.query(qry,
+             (err,values) => {
+                 if(err){
+                     resolve(null)
+                 }
+                 else{
+                     resolve(values)
+                 }
+             })
+    })
+}
+export async function getProfile(username : string){
+    return new Promise((resolve,reject) => {
+        let qry = `select * from profile where username='${username}';`
+        connection.query(qry,
+             (err,values) => {
+                 if(err){
+                     resolve(null)
+                 }
+                 else{
+                     resolve(values)
+                 }
+             })
+    })
 }
 
 export async function getSession(){
