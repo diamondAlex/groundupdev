@@ -1,4 +1,12 @@
-fix the build/serving to only use vite
-fix the display, having flex everywhere can't be right
-check the tsconfigs and make sure they're standard
-set up database environments and redundancy
+high:
+    pfp upload
+    profile page styling
+    login styling
+
+mid:
+    add foreign keys or some shit I guess ( who careessss)
+
+low:
+    fix the display, having flex everywhere can't be right
+    fix the build/serving to only use vite
+    set up database environments and redundancy

@@ -10,16 +10,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { createConnection } from 'mysql2';
 import * as crypto from 'crypto';
-//this needs to go somewhere else
-const connection = createConnection({
-    port: 3307,
-    host: "localhost",
-    user: "user",
-    password: "password",
-    database: "db"
-});
+import connection from './db.js';
+export function setPfpUrl(url, username) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => {
+            let qry = `UPDATE profile SET pfp = '${url}' where username = '${username}'`;
+            console.log(qry);
+            connection.query(qry, (err, values) => {
+                if (err) {
+                    //this is bad
+                    resolve(null);
+                }
+                else {
+                    if (values.length != 0) {
+                        resolve(true);
+                    }
+                    else {
+                        resolve(null);
+                    }
+                }
+            });
+        });
+    });
+}
 export function get_user(username) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => {
@@ -116,14 +130,10 @@ export function getProfile(username) {
                     resolve(null);
                 }
                 else {
-                    resolve(values);
+                    resolve(values[0]);
                 }
             });
         });
-    });
-}
-export function getSession() {
-    return __awaiter(this, void 0, void 0, function* () {
     });
 }
 //fix the returns here as it is dogshit

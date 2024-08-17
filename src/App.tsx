@@ -26,8 +26,6 @@ function App() {
         setLogged(status) 
     }    
 
-    console.log(logged)
-
     return (
         <>
             <div style={{display:'flex',flex:1,color:"white"}}>
